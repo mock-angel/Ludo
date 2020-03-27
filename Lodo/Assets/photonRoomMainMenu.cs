@@ -22,6 +22,8 @@ public class photonRoomMainMenu : MonoBehaviourPunCallbacks, IMatchmakingCallbac
     
     public GameObject DarknerPanel;
     public GameObject FriendsPanel;
+    public GameObject RoomWaitingPanel;
+    
     
     GameModeSelection GameModeSelected = GameModeSelection.None;
     
@@ -134,8 +136,11 @@ public class photonRoomMainMenu : MonoBehaviourPunCallbacks, IMatchmakingCallbac
     }
     public override void OnJoinedRoom(){
         //Switch to waiting panel.
-        print("Room Joined");
+        DarknerPanel.SetActive(true);
+        FriendsPanel.SetActive(false);
         
+        RoomWaitingPanel.SetActive(true);
+        print("Room Joined");
     }
     
     public void OnJoinRoomFailed(){
@@ -145,8 +150,19 @@ public class photonRoomMainMenu : MonoBehaviourPunCallbacks, IMatchmakingCallbac
     public void OnCreateRoomFailed(){
         print("Failed to create room :" + roomName);
         if(joinedLobby) OnClickCreateRoom();
-        
     }
+    
+    public override void OnLeftRoom(){
+        RoomWaitingPanel.SetActive(false);
+        print("Left Room : " + roomName);
+    }
+    
+    public void OnClickLeaveRoom(){
+        PhotonNetwork.LeaveRoom();
+        DarknerPanel.SetActive(false);
+        FriendsPanel.SetActive(false);
+    }
+    
     public void OnClickCreateRoom(){
         if(!PhotonNetwork.IsConnected) return;
         
