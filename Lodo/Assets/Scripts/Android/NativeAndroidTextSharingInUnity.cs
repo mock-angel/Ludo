@@ -19,18 +19,18 @@ public class NativeAndroidTextSharingInUnity : MonoBehaviour {
 
 	private void ShareText () {
 
-		#if UNITY_ANDROID
+	#if UNITY_ANDROID
 		if (!isProcessing) {
 			StartCoroutine (ShareTextInAnroid ());
 		}
-		#else
+	#else
 		Debug.Log("No sharing set up for this platform.");
-		#endif
+	#endif
 	}
 
 
 
-	#if UNITY_ANDROID
+#if UNITY_ANDROID
 	public IEnumerator ShareTextInAnroid () {
 
 		var shareSubject = "I challenge you to beat my high score in Fire Block";
@@ -69,5 +69,5 @@ public class NativeAndroidTextSharingInUnity : MonoBehaviour {
 		yield return new WaitUntil (() => isFocus);
 		isProcessing = false;
 	}
-	#endif
+#endif
 }
