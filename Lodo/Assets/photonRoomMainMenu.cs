@@ -5,6 +5,8 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
+using TMPro;
+
 public enum GameModeSelection{
     None,
     Computer,
@@ -24,10 +26,12 @@ public class photonRoomMainMenu : MonoBehaviourPunCallbacks, IMatchmakingCallbac
     public GameObject FriendsPanel;
     public GameObject RoomWaitingPanel;
     
-    
     GameModeSelection GameModeSelected = GameModeSelection.None;
     
     public GameObject DisconnectedTextSection;
+    
+    [SerializeField]
+    private TMP_InputField RoomCodeInputField;
     
     void Start(){
         AppSettings myAppSettings = PhotonNetwork.PhotonServerSettings.AppSettings;
@@ -134,6 +138,7 @@ public class photonRoomMainMenu : MonoBehaviourPunCallbacks, IMatchmakingCallbac
     public override void OnCreatedRoom(){
         print("Room Created : " + roomName);
     }
+    
     public override void OnJoinedRoom(){
         //Switch to waiting panel.
         DarknerPanel.SetActive(true);
@@ -176,5 +181,9 @@ public class photonRoomMainMenu : MonoBehaviourPunCallbacks, IMatchmakingCallbac
 //        string otherPlayerId = player.UserId;
         
         PhotonNetwork.CreateRoom(roomName, options, null);
+    }
+    
+    public void OnClickJoinRoom(){
+        PhotonNetwork.JoinRoom(RoomCodeInputField.text);
     }
 }

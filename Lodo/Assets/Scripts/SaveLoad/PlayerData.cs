@@ -5,8 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class FriendData
 {
-    public string FriendName = "";
-    public string FriendId = "";
+    public string name = "";
+    public string code = "";
 }
 
 [System.Serializable]
