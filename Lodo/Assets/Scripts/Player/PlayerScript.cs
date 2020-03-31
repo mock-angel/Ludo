@@ -23,6 +23,11 @@ public class PlayerScript : MonoBehaviour
         LoadPlayer();
     }
     
+    public void Awake(){
+        instance = this;
+        LoadPlayer();
+    }
+    
     public void SavePlayer(){
         SaveSystem.SavePlayer(this);
     }

@@ -5,13 +5,14 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
+    public static string path = "/playerData0.fun";
     public static void SavePlayer(PlayerScript player){
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/playerData.fun";
+        string spath = Application.persistentDataPath + path;
         
 //        FileStream stream = new FileStream(path, FileMode.OpenOrCreate);
         Debug.LogError("SavePlayer : opening stream");
-        FileStream stream = new FileStream(path, FileMode.Create);
+        FileStream stream = new FileStream(spath, FileMode.Create);
         PlayerData data = new PlayerData(player);
 //        
         formatter.Serialize(stream, data);
@@ -29,17 +30,17 @@ public static class SaveSystem
     
     public static PlayerData LoadPlayer(){
     
-        string path = Application.persistentDataPath + "/playerData.fun";
-        if (File.Exists(path)){
+        string spath = Application.persistentDataPath + path;
+        if (File.Exists(spath)){
             BinaryFormatter formatter = new BinaryFormatter();
             Debug.LogError("LoadPlayer : opening stream");
-            FileStream stream = new FileStream(path, FileMode.Open);
+            FileStream stream = new FileStream(spath, FileMode.Open);
             
             stream.Position = 0;
             PlayerData data = formatter.Deserialize(stream) as PlayerData;
             stream.Close();
             Debug.LogError("LoadPlayer : Closed stream");
-//            using (var stream = File.Open(path, FileMode.Open))
+//            using (var stream = File.Open(spath, FileMode.Open))
 //            {
 //                data = formatter.Deserialize(stream) as PlayerData;
 //            }
@@ -47,7 +48,7 @@ public static class SaveSystem
             return data;
             
         } else {
-            Debug.LogError("Save file not found in " + path);
+            Debug.LogError("Save file not found in " + spath);
             
             return null;
         }

@@ -22,6 +22,8 @@ public class photonRoomMainMenu : MonoBehaviourPunCallbacks, IMatchmakingCallbac
     public bool connectedToMaster;
     public bool joinedLobby;
     
+//    public PlayerScript PlayerScriptInstance;
+    
     public GameObject DarknerPanel;
     public GameObject FriendsPanel;
     public GameObject RoomWaitingPanel;
@@ -34,23 +36,39 @@ public class photonRoomMainMenu : MonoBehaviourPunCallbacks, IMatchmakingCallbac
     private TMP_InputField RoomCodeInputField;
     public TextMeshProUGUI roomNameText;
     
+    public List<Player> playerList;
+    
+    public PlayerProfileData MasterProfile;
+    public List<PlayerProfileData> ClientProfiles;
+    
+    void CheckPlayer(PlayerScript PlayerScriptInstance){
+        if(PlayerScriptInstance.PlayerId == "-1"){
+                int generatedNum = Random.Range(1, 100000);
+                string IdString = generatedNum.ToString();
+                for(int i = IdString.Length; i < 5; i++){
+                    IdString = "0" + IdString;
+                }
+                PlayerScriptInstance.PlayerName = "Guest" + IdString;
+                PlayerScriptInstance.PlayerId = IdString;
+                
+                PlayerScriptInstance.SavePlayer();
+            }
+    }
+    
     void Start(){
         AppSettings myAppSettings = PhotonNetwork.PhotonServerSettings.AppSettings;
         myAppSettings.AppIdRealtime = "34c8c8eb-74a5-4e86-9439-cf20cf38ce94";
         //Photon Realtime(Ludo):"34c8c8eb-74a5-4e86-9439-cf20cf38ce94"
         //Photon Realtime(Bingo):"91b0dcd7-8e80-40d8-8ad8-03dd45b45bed"
         
-        if(PlayerScript.instance.PlayerId == "-1"){
-            int generatedNum = Random.Range(1, 100000);
-            string IdString = generatedNum.ToString();
-            for(int i = IdString.Length; i < 5; i++){
-                IdString = "0" + IdString;
-            }
-            PlayerScript.instance.PlayerName = "Guest" + IdString;
-            PlayerScript.instance.PlayerId = IdString;
+        if(PlayerScript.instance == null){
+            PlayerScript PlayerScriptInstance = new PlayerScript();
+            PlayerScriptInstance.LoadPlayer();
             
-            PlayerScript.instance.SavePlayer();
+            CheckPlayer(PlayerScriptInstance);
+            Destroy(PlayerScriptInstance);
         }
+        else CheckPlayer(PlayerScript.instance);
         
         AuthenticationValues authValues = new AuthenticationValues("1");
         PhotonNetwork.AuthValues = authValues;
@@ -135,7 +153,7 @@ public class photonRoomMainMenu : MonoBehaviourPunCallbacks, IMatchmakingCallbac
     
     
     
-    //Creating or joining room.
+    //---------Creating or joining room.---------
     public override void OnCreatedRoom(){
         print("Room Created : " + roomName);
         
@@ -149,6 +167,8 @@ public class photonRoomMainMenu : MonoBehaviourPunCallbacks, IMatchmakingCallbac
         
         roomNameText.text = roomName;
         RoomWaitingPanel.SetActive(true);
+        
+        UpdatePlayerList();
         print("Room Joined");
     }
     
@@ -190,5 +210,44 @@ public class photonRoomMainMenu : MonoBehaviourPunCallbacks, IMatchmakingCallbac
     public void OnClickJoinRoom(){
         roomName = RoomCodeInputField.text;
         PhotonNetwork.JoinRoom(RoomCodeInputField.text);
+    }
+    
+    
+    //---------Do stuff if player updated.---------
+    public override void  OnPlayerEnteredRoom(Player player){
+//        playerList.Add(player);
+        UpdatePlayerList();
+    }
+    public override void  OnPlayerLeftRoom(Player player){
+//        playerList.Remove(player);
+        UpdatePlayerList();
+    }
+    
+    private void UpdatePlayerList(){
+        Dictionary<int, Player> pList = PhotonNetwork.CurrentRoom.Players;
+        Player masterClient = PhotonNetwork.MasterClient;
+        
+        MasterProfile.player = masterClient;
+        MasterProfile.UpdateProfileData();
+        
+        for(int j = 0; j < 3; j++){
+            ClientProfiles[j].player = null;
+            ClientProfiles[j].UpdateProfileData();
+        }
+        
+        if(masterClient == null) return;
+        
+        int i = 0;
+        foreach (KeyValuePair<int, Photon.Realtime.Player> p in pList)
+         {
+             print(p.Value.NickName );
+             
+             if(p.Value != masterClient){
+                print("" + i);
+                ClientProfiles[i].player = p.Value;
+                ClientProfiles[i].UpdateProfileData();
+                i++;
+             }
+         }
     }
 }
