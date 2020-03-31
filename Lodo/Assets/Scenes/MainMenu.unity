@@ -760,18 +760,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99615085}
   m_CullTransparentMesh: 0
---- !u!114 &152130559 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7109730214340496983, guid: f3afdd50de6198e19a34ecb8821f0310,
-    type: 3}
-  m_PrefabInstance: {fileID: 7109730214492626344}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &152997947
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,10 +1067,10 @@ RectTransform:
   m_Father: {fileID: 731896093}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 204, y: 564}
-  m_SizeDelta: {x: 251.6, y: 87.99}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -142.9, y: 43.994995}
+  m_SizeDelta: {x: 251.59998, y: 87.98999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &259722699
 MonoBehaviour:
@@ -2626,18 +2614,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 465505506}
   m_CullTransparentMesh: 0
---- !u!114 &465612493 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7109730214572290917, guid: f3afdd50de6198e19a34ecb8821f0310,
-    type: 3}
-  m_PrefabInstance: {fileID: 7109730214492626344}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &472937496
 GameObject:
   m_ObjectHideFlags: 0
@@ -9719,10 +9695,10 @@ RectTransform:
   m_Father: {fileID: 731896093}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 385, y: 564}
-  m_SizeDelta: {x: 110.4, y: 88}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 38.099976, y: 44}
+  m_SizeDelta: {x: 110.399994, y: 88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1704871816
 MonoBehaviour:
@@ -12472,16 +12448,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 727018589}
     m_Modifications:
-    - target: {fileID: 95711594503545954, guid: f3afdd50de6198e19a34ecb8821f0310,
-        type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 152130559}
-    - target: {fileID: 95711594503545954, guid: f3afdd50de6198e19a34ecb8821f0310,
-        type: 3}
-      propertyPath: codeText
-      value: 
-      objectReference: {fileID: 465612493}
     - target: {fileID: 7109730216377190097, guid: f3afdd50de6198e19a34ecb8821f0310,
         type: 3}
       propertyPath: m_Name
