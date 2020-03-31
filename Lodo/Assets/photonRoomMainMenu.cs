@@ -29,9 +29,10 @@ public class photonRoomMainMenu : MonoBehaviourPunCallbacks, IMatchmakingCallbac
     GameModeSelection GameModeSelected = GameModeSelection.None;
     
     public GameObject DisconnectedTextSection;
-    
+    public GameObject pref;
     [SerializeField]
     private TMP_InputField RoomCodeInputField;
+    public TextMeshProUGUI roomNameText;
     
     void Start(){
         AppSettings myAppSettings = PhotonNetwork.PhotonServerSettings.AppSettings;
@@ -137,6 +138,8 @@ public class photonRoomMainMenu : MonoBehaviourPunCallbacks, IMatchmakingCallbac
     //Creating or joining room.
     public override void OnCreatedRoom(){
         print("Room Created : " + roomName);
+        
+        PhotonNetwork.Instantiate(pref.name, pref.transform.position, pref.transform.rotation);
     }
     
     public override void OnJoinedRoom(){
@@ -144,6 +147,7 @@ public class photonRoomMainMenu : MonoBehaviourPunCallbacks, IMatchmakingCallbac
         DarknerPanel.SetActive(true);
         FriendsPanel.SetActive(false);
         
+        roomNameText.text = roomName;
         RoomWaitingPanel.SetActive(true);
         print("Room Joined");
     }
@@ -184,6 +188,7 @@ public class photonRoomMainMenu : MonoBehaviourPunCallbacks, IMatchmakingCallbac
     }
     
     public void OnClickJoinRoom(){
+        roomName = RoomCodeInputField.text;
         PhotonNetwork.JoinRoom(RoomCodeInputField.text);
     }
 }
